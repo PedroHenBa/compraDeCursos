@@ -8,6 +8,6 @@ class CategoriasModel extends Model
     protected $primaryKey = 'id';
     protected $allowedFields = ['nome'];
     protected $validationRules    = [
-        'nome'     => 'required|max_length[50]',
+        'nome' => 'required|max_length[50]',
     ];
 }
