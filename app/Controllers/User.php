@@ -18,17 +18,20 @@ class User extends ResourceController
     {
         $model = new UsersModel();
         $data = [
-            'email'    => $this->request->getVar('email'),
-            'senha' => password_hash($this->request->getVar('senha'), PASSWORD_DEFAULT)
+            "email" => $this->request->getVar("email"),
+            "senha" => password_hash(
+                $this->request->getVar("senha"),
+                PASSWORD_DEFAULT
+            ),
         ];
 
-        if($model->insert($data)){
+        if ($model->insert($data)) {
             $response = [
-                'status'   => 201,
-                'error'    => null,
-                'messages' => [
-                    'success' => 'Dados salvos'
-                ]
+                "status" => 201,
+                "error" => null,
+                "messages" => [
+                    "success" => "Dados salvos",
+                ],
             ];
             return $this->respondCreated($response);
         }
@@ -36,27 +39,25 @@ class User extends ResourceController
         return $this->fail($model->errors());
     }
 
-    public function login(){
+    public function login()
+    {
         $model = new UsersModel();
 
-        $email = $this->request->getVar('email');
-        $senha = $this->request->getVar('senha');
+        $email = $this->request->getVar("email");
+        $senha = $this->request->getVar("senha");
 
-        $data = $model->getWhere(['email' => $email])->getResult();
+        $data = $model->getWhere(["email" => $email])->getResult();
 
-        if ($data){
+        if ($data) {
             $pass = $data[0]->$senha;
             $verifyPassword = password_verify($senha, $pass);
 
-            if($verifyPassword){
-                return $this->respond('Usuario Logado');
+            if ($verifyPassword) {
+                return $this->respond("Usuario Logado");
             }
-
-            return $this->failNotFound('Senha incorreta');
-
+            return $this->failNotFound("Senha incorreta");
         } else {
-            return $this->failNotFound('Email incorreto');
+            return $this->failNotFound("Email incorreto");
         }
-
     }
 }

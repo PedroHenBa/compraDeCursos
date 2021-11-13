@@ -20,13 +20,13 @@ class Cursos extends ResourceController
         $model = new CursosModel();
         $data = $this->request->getJSON();
 
-        if($model->insert($data)){
+        if ($model->insert($data)) {
             $response = [
-                'status'   => 201,
-                'error'    => null,
-                'messages' => [
-                    'success' => 'Curso salvo'
-                ]
+                "status" => 201,
+                "error" => null,
+                "messages" => [
+                    "success" => "Curso salvo",
+                ],
             ];
             return $this->respondCreated($response);
         }
@@ -37,24 +37,64 @@ class Cursos extends ResourceController
     public function show($id = null)
     {
         $model = new CursosModel();
-        $data = $model->getWhere(['id' => $id])->getResult();
+        $data = $model->getWhere(["id" => $id])->getResult();
 
-        if($data){
+        if ($data) {
             return $this->respond($data);
         }
 
-        return $this->failNotFound('Nenhum curso encontrado com esse id '.$id);
+        return $this->failNotFound(
+            "Nenhum curso encontrado com esse id " . $id
+        );
     }
 
-    public function showCursosByCategoria($id = null){
+    public function showByName($name = null)
+    {
         $model = new CursosModel();
-        $data = $model->getWhere(['idCategoria' => $id])->getResult();
+        $data = $model->getWhere(["name" => $name])->getResult();
 
-        if($data){
+        if ($data) {
             return $this->respond($data);
         }
 
-        return $this->failNotFound('Nenhum curso encontrado com essa categoria '.$id);
+        return $this->failNotFound(
+            "Nenhum curso encontrado com esse id " . $name
+        );
     }
 
+    public function showCursosByCategoria($id = null)
+    {
+        $model = new CursosModel();
+        $data = $model->getWhere(["idCategoria" => $id])->getResult();
+
+        if ($data) {
+            return $this->respond($data);
+        }
+
+        return $this->failNotFound(
+            "Nenhum curso encontrado com essa categoria " . $id
+        );
+    }
+
+    public function delete($id = null)
+    {
+        $model = new CursosModel();
+        $data = $model->find($id);
+
+        if ($data) {
+            $model->delete($id);
+            $response = [
+                "status" => 200,
+                "error" => null,
+                "messages" => [
+                    "success" => "Curso removido",
+                ],
+            ];
+            return $this->respondDeleted($response);
+        }
+
+        return $this->failNotFound(
+            "Nenhum curso encontrado com esse id " . $id
+        );
+    }
 }
