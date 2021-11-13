@@ -4,12 +4,12 @@ use CodeIgniter\Model;
 
 class CursosModel extends Model
 {
-    protected $table = 'cursos';
-    protected $primaryKey = 'id';
-    protected $allowedFields = ['name', 'idCategoria', 'preco'];
-    protected $validationRules    = [
-        'name' => 'required|max_length[50]',
-        'idCategoria' => 'required|max_length[50]',
-        'preco' => 'required|decimal',
+    protected $table = "cursos";
+    protected $primaryKey = "id";
+    protected $allowedFields = ["name", "nomeCategoria", "preco"];
+    protected $validationRules = [
+        "name" => "required|max_length[50]",
+        "nomeCategoria" => "required|max_length[50]",
+        "preco" => "required|decimal",
     ];
 }

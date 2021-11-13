@@ -34,21 +34,7 @@ class Cursos extends ResourceController
         return $this->fail($model->errors());
     }
 
-    public function show($id = null)
-    {
-        $model = new CursosModel();
-        $data = $model->getWhere(["id" => $id])->getResult();
-
-        if ($data) {
-            return $this->respond($data);
-        }
-
-        return $this->failNotFound(
-            "Nenhum curso encontrado com esse id " . $id
-        );
-    }
-
-    public function showByName($name = null)
+    public function show($name = null)
     {
         $model = new CursosModel();
         $data = $model->getWhere(["name" => $name])->getResult();
@@ -58,14 +44,14 @@ class Cursos extends ResourceController
         }
 
         return $this->failNotFound(
-            "Nenhum curso encontrado com esse id " . $name
+            "Nenhum curso encontrado com esse nome " . $name
         );
     }
 
-    public function showCursosByCategoria($id = null)
+    public function categoria($nome = null)
     {
         $model = new CursosModel();
-        $data = $model->getWhere(["idCategoria" => $id])->getResult();
+        $data = $model->getWhere(["nomeCategoria" => $nome])->getResult();
 
         if ($data) {
             return $this->respond($data);
@@ -73,28 +59,6 @@ class Cursos extends ResourceController
 
         return $this->failNotFound(
             "Nenhum curso encontrado com essa categoria " . $id
-        );
-    }
-
-    public function delete($id = null)
-    {
-        $model = new CursosModel();
-        $data = $model->find($id);
-
-        if ($data) {
-            $model->delete($id);
-            $response = [
-                "status" => 200,
-                "error" => null,
-                "messages" => [
-                    "success" => "Curso removido",
-                ],
-            ];
-            return $this->respondDeleted($response);
-        }
-
-        return $this->failNotFound(
-            "Nenhum curso encontrado com esse id " . $id
         );
     }
 }

@@ -14,7 +14,7 @@ class User extends ResourceController
         return $this->respond($data);
     }
 
-    public function create()
+    public function register()
     {
         $model = new UsersModel();
         $data = [

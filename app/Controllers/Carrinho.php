@@ -85,6 +85,35 @@ class Carrinho extends ResourceController
             return $this->respond($data);
         }
 
-        return $this->failNotFound("Nenhum carrinho com esse id " . $id);
+        return $this->failNotFound(
+            "Nenhum carrinho com esse id ou carrinho esta vazio" . $id
+        );
+    }
+
+    public function remove()
+    {
+        $model = new CursosCarrinhoModel();
+
+        $idCurso = $this->request->getVar("idCurso");
+        $idCarrinho = $this->request->getVar("idCarrinho");
+
+        $data = $model
+            ->getWhere(["idCarrinho" => $idCarrinho, "idCurso" => $idCurso])
+            ->getResultArray();
+
+        if ($data) {
+            $model->delete($data[0]["id"]);
+            $response = [
+                "status" => 200,
+                "error" => null,
+                "messages" => [
+                    "success" => "Curso removido do carrinho",
+                ],
+            ];
+            return $this->respondDeleted($response);
+        }
+        return $this->failNotFound(
+            "idCarrinho ou idCurso não foram encontrados"
+        );
     }
 }

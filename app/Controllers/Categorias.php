@@ -18,40 +18,21 @@ class Categorias extends ResourceController
     {
         $model = new CategoriasModel();
         $data = [
-            'nome' => $this->request->getVar('nome'),
+            "nome" => $this->request->getVar("nome"),
         ];
 
-        if($model->insert($data)){
+        if ($model->insert($data)) {
             $response = [
-                'status'   => 201,
-                'error'    => null,
-                'messages' => [
-                    'success' => 'Categoria salva'
-                ]
+                "status" => 201,
+                "error" => null,
+                "messages" => [
+                    "success" => "Categoria salva",
+                ],
             ];
+
             return $this->respondCreated($response);
         }
 
         return $this->fail($model->errors());
-    }
-
-    public function delete($id = null)
-    {
-        $model = new CategoriasModel();
-        $data = $model->find($id);
-
-        if($data){
-            $model->delete($id);
-            $response = [
-                'status'   => 200,
-                'error'    => null,
-                'messages' => [
-                    'success' => 'Dados removidos'
-                ]
-            ];
-            return $this->respondDeleted($response);
-        }
-
-        return $this->failNotFound('Nenhum dado encontrado com id '.$id);
     }
 }
