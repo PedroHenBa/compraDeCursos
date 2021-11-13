@@ -49,12 +49,13 @@ class User extends ResourceController
         $data = $model->getWhere(["email" => $email])->getResult();
 
         if ($data) {
-            $pass = $data[0]->$senha;
+            $pass = $data[0]->senha;
             $verifyPassword = password_verify($senha, $pass);
 
             if ($verifyPassword) {
                 return $this->respond("Usuario Logado");
             }
+
             return $this->failNotFound("Senha incorreta");
         } else {
             return $this->failNotFound("Email incorreto");
