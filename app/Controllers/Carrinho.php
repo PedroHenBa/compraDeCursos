@@ -86,7 +86,7 @@ class Carrinho extends ResourceController
         }
 
         return $this->failNotFound(
-            "Nenhum carrinho com esse id ou carrinho esta vazio" . $id
+            "Nenhum carrinho com esse id ou carrinho esta vazio " . $id
         );
     }
 

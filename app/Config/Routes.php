@@ -7,8 +7,8 @@ $routes = Services::routes();
 
 // Load the system's routing file first, so that the app and ENVIRONMENT
 // can override as needed.
-if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
-    require SYSTEMPATH . 'Config/Routes.php';
+if (file_exists(SYSTEMPATH . "Config/Routes.php")) {
+    require SYSTEMPATH . "Config/Routes.php";
 }
 
 /*
@@ -16,9 +16,9 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
  * Router Setup
  * --------------------------------------------------------------------
  */
-$routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Home');
-$routes->setDefaultMethod('index');
+$routes->setDefaultNamespace("App\Controllers");
+$routes->setDefaultController("Home");
+$routes->setDefaultMethod("index");
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 $routes->setAutoRoute(true);
@@ -31,7 +31,23 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->resource('User');
+$routes->get("users", "User::index");
+$routes->post("user/login", "User::login");
+$routes->post("user/register", "User::register");
+
+$routes->get("cursos", "Cursos::index");
+$routes->post("curso", "Cursos::create");
+$routes->get("curso/(:segment)", "Cursos::show/$1");
+$routes->get("curso/categoria/(:segment)", "Cursos::showByCategoria/$1");
+
+$routes->get("categorias", "Categorias::index");
+$routes->post("categoria", "Categorias::create");
+
+$routes->get("carrinhos", "Carrinho::index");
+$routes->post("carrinho", "Carrinho::create");
+$routes->post("carrinho/adicionar", "Carrinho::add");
+$routes->delete("carrinho/remover", "Carrinho::remove");
+$routes->get("carrinho/(:segment)", "Carrinho::show/$1");
 
 /*
  * --------------------------------------------------------------------
@@ -46,6 +62,6 @@ $routes->resource('User');
  * You will have access to the $routes object within that file without
  * needing to reload it.
  */
-if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
-    require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
+if (file_exists(APPPATH . "Config/" . ENVIRONMENT . "/Routes.php")) {
+    require APPPATH . "Config/" . ENVIRONMENT . "/Routes.php";
 }

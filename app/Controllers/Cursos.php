@@ -48,7 +48,7 @@ class Cursos extends ResourceController
         );
     }
 
-    public function categoria($nome = null)
+    public function showByCategoria($nome = null)
     {
         $model = new CursosModel();
         $data = $model->getWhere(["nomeCategoria" => $nome])->getResult();
