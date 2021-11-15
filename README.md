@@ -1,63 +1,224 @@
-# CodeIgniter 4 Application Starter
+<h1>Api com codeIgniter</h1>
 
-## What is CodeIgniter?
+- Uma pequena api escrita em php
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](http://codeigniter.com).
+<h1>Instalação</h1>
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+```bash
+git clone https://github.com/PedroHenBa/compraDeCursos.git
+```
 
-More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
+<h1>Iniciando</h1>
 
-The user guide corresponding to this version of the framework can be found
-[here](https://codeigniter4.github.io/userguide/).
+<h2>Criar um usuário</h2>
 
-## Installation & updates
+para criar um usuário, mande uma request post para `http://localhost:8080/user/register`
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+```bash
+{
+    "email" : "example@email.com",
+    "senha": "example"
+}
+```
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+<h2>Login</h2>
 
-## Setup
+para fazer login mande uma request post para `http://localhost:8080/user/login`
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+```bash
+{
+    "email": "example@email.com",
+    "senha" : "example"
+}
+```
 
-## Important Change with index.php
+<h2>Listar usuários</h2>
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+para listar, mande uma request get para `http://localhost:8080/users`
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+```bash
+[
+    {
+        "id": "4",
+        "email": "pedro",
+        "senha": "1234"
+    },
+]
+```
 
-**Please** read the user guide for a better explanation of how CI4 works!
+<h1>Categorias</h1>
 
-## Repository Management
+<h2>Criar categoria</h2>
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+para criar uma categoria, mande uma request post para `http://localhost:8080/categoria`
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+```bash
+{
+    "nome" : "exemplo",
+}
+```
 
-## Server Requirements
+<h2>Listar categorias</h2>
 
-PHP version 7.3 or higher is required, with the following extensions installed:
+para listar, mande uma request get para `http://localhost:8080/categorias`
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+```bash
+[
+    {
+        "id": "1",
+        "nome": "teste"
+    }
+]
+```
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+<h1>Cursos</h1>
 
-- json (enabled by default - don't turn it off)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php)
-- xml (enabled by default - don't turn it off)
+<h2>Criar cursos</h2>
+
+para criar um curso, mande uma request post para `http://localhost:8080/curso`
+
+```bash
+{
+    "name": "teste1",
+    "nomeCategoria" : "teste1",
+    "preco" : "50",
+    "descricao" : "teste1",
+    "imagemUrl" : "teste.png"
+}
+```
+
+<h2>Pesquisar curso por nome</h2>
+
+para pesquisar um curso por nome, mande uma request get para `http://localhost:8080/curso/$nome`
+
+```bash
+[
+    {
+        "id": "teste1",
+        "name": "teste1",
+        "nomeCategoria": "teste1",
+        "preco": "50",
+        "descricao": "teste1",
+        "imagemUrl": null
+    }
+]
+```
+
+<h2>Listar curso por categoria</h2>
+
+para listar cursos pela categoria, mande uma request get para `http://localhost:8080/curso/categoria/$nomeCategoria`
+
+
+```bash
+[
+    {
+        "id": "teste1",
+        "name": "teste1",
+        "nomeCategoria": "teste1",
+        "preco": "50",
+        "descricao": "teste1",
+        "imagemUrl": null
+    },
+    {
+        "id": "teste2",
+        "name": "teste2",
+        "nomeCategoria": "teste1",
+        "preco": "50",
+        "descricao": "teste2",
+        "imagemUrl": null
+    }
+]
+```
+
+<h2>Listar Cursos</h2>
+
+para listar cursos, mande uma request get para `http://localhost:8080/cursos`
+
+```bash
+[
+    {
+        "id": "teste1",
+        "name": "teste1",
+        "nomeCategoria": "teste1",
+        "preco": "50",
+        "descricao": "teste1",
+        "imagemUrl": null
+    },
+    {
+        "id": "teste2",
+        "name": "teste2",
+        "nomeCategoria": "teste3",
+        "preco": "50",
+        "descricao": "teste2",
+        "imagemUrl": null
+    }
+]
+```
+
+<h1>Carrinho</h1>
+
+<h2>Criar carrinho</h2>
+
+para criar um carrinho, mande uma request post para `http://localhost:8080/carrinho`
+
+```bash
+{
+    "idUser" : "1",
+}
+```
+
+<h2>Adicionar curso ao carrinho</h2>
+
+para adicionar curso ao carrinho, mande uma request post para `http://localhost:8080/carrinho/adicionar`
+
+```bash
+{
+    "idCurso" : "6",
+    "idCarrinho" : "8"
+}
+```
+
+<h2>Remover item do carrinho</h2>
+
+para remover curso do carrinho, mande uma request delete para `http://localhost:8080/carrinho/remover`
+
+```bash
+{
+    "idCurso" : "6",
+    "idCarrinho" : "8"
+}
+```
+
+<h2>Listar carrinhos</h2>
+
+para listar os carrinhos, mande uma request get para `http://localhost:8080/carrinhos`
+
+```bash
+[
+    {
+        "id": "6",
+        "idUser": "4"
+    }
+]
+```
+
+<h2>Detalhar carrinho</h2>
+
+para detalhar o carrinho, mande uma request get para `http://localhost:8080/carrinho/show/$id`
+
+
+```bash
+[
+    {
+        "id": "6",
+        "name": "teste1",
+        "nomeCategoria": "teste1",
+        "preco": "100",
+        "descricao": "",
+        "imagemUrl": null
+    },
+    {
+        "total": 100
+    }
+]
+```
